@@ -87,7 +87,7 @@ const GlossaryWordItem = ({
           <div className="flex gap-2">
             <button
               onClick={() => setEditMode(true)}
-              className="hover:bg-cyan-400  bg-cyan-500 text-white px-3 py-2 rounded cursor-pointer"
+              className="bg-[#47A6FF] hover:bg-[#1F93FF] text-white px-5 py-1 rounded cursor-pointer dark:bg-blue-600 dark:hover:bg-blue-500 dark:text-white"
             >
               Edit
             </button>

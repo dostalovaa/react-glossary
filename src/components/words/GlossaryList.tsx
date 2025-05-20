@@ -37,7 +37,7 @@ const GlossaryList = ({
       <div className="flex justify-between items-center mb-3 flex-wrap gap-2">
         <button
           onClick={() => setSortAlphabetically((prev) => !prev)}
-          className="text-white px-3 py-1 hover:bg-pink-400 bg-pink-500 transition rounded cursor-pointer"
+          className="text-white px-3 py-1 bg-[#47A6FF] hover:bg-[#1F93FF] transition rounded cursor-pointer dark:bg-blue-600 dark:hover:bg-blue-500 dark:text-white"
         >
           Sort: {sortAlphabetically ? "A-Z" : "Z-A"}
         </button>

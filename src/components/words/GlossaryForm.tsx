@@ -51,17 +51,17 @@ const GlossaryForm = ({ addWord, glossary }: GlossaryFormProps) => {
   return (
     <section className="mb-5">
       {showNoInput && (
-        <p className="font-bold text-2xl sm:text-5xl md:text-4xl lg:text-6xl text-center mb-2 text-blue-400 uppercase">
+        <p className="text-4xl tracking-tighter text-balance text-center mb-2 text-white uppercase text-shadow-gray-10">
           Please fill in all fields
         </p>
       )}
       {showAdded && (
-        <p className="font-bold text-2xl sm:text-5xl md:text-4xl lg:text-6xl text-center mb-2 text-blue-400 uppercase">
+        <p className="text-4xl tracking-tighter text-balance text-center mb-2 text-white uppercase text-shadow-gray-10">
           The word has already been added
         </p>
       )}
       <form onSubmit={formHandle}>
-        <div className="flex flex-col items-center gap-2 space-y-4">
+        <div className="flex flex-col items-center space-y-4">
           <input
             type="text"
             placeholder="Add new word"
@@ -78,7 +78,7 @@ const GlossaryForm = ({ addWord, glossary }: GlossaryFormProps) => {
 
           <button
             type="submit"
-            className="m-auto w-[70%] rounded-md p-3 text-white hover:bg-cyan-400  bg-cyan-500 cursor-pointer"
+            className="m-auto w-[70%] rounded-md p-3 text-white bg-[#47A6FF] hover:bg-[#1F93FF] dark:bg-blue-600 dark:hover:bg-blue-500 dark:text-white text-xl cursor-pointer"
           >
             Add
           </button>
