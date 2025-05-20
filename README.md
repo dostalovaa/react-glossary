@@ -21,4 +21,4 @@ It allows you to manage a personal vocabulary with add, edit, delete, and search
 - Material UI
 - Vite
 
-
+If no Firebase connection is configured, the app loads fake sample words instead.
