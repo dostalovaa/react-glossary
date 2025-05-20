@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import type GlossaryItem from "../types/type";
 import {
   collection,
@@ -17,14 +17,14 @@ const useGlossary = () => {
 
   useEffect(() => {
     const fetchWords = async () => {
-      setLoading(false);
+      setLoading(true);
       const snapshot = await getDocs(wordsRef);
       const items = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       })) as GlossaryItem[];
       setGlossary(items);
-      setLoading(true);
+      setLoading(false);
     };
 
     fetchWords();
@@ -35,14 +35,14 @@ const useGlossary = () => {
     setGlossary((prev) => [...prev, { id: docRef.id, ...newWord }]);
   };
 
-  const deleteWord = async (id: string) => {
+  const deleteWord = useCallback(async (id: string) => {
     await deleteDoc(doc(db, "words", id));
     setGlossary((prev: GlossaryItem[]) =>
       prev.filter((word) => word.id !== id)
     );
-  };
+  }, []);
 
-  const updateWord = async (updated: GlossaryItem) => {
+  const updateWord = useCallback(async (updated: GlossaryItem) => {
     const wordRef = doc(db, "words", updated.id);
     await updateDoc(wordRef, {
       word: updated.word,
@@ -51,7 +51,7 @@ const useGlossary = () => {
     setGlossary((prev) =>
       prev.map((word) => (word.id === updated.id ? updated : word))
     );
-  };
+  }, []);
 
   return { glossary, loading, addWord, deleteWord, updateWord };
 };

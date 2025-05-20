@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import GlossaryWordItem from "./GlossaryWordItem";
 import type GlossaryItem from "../../types/type";
 import Loading from "../ui/Loading";
@@ -23,15 +23,18 @@ const GlossaryList = ({
 
   const [sortAlphabetically, setSortAlphabetically] = useState(true);
 
-  const visibleGlossary = [...glossary]
-    .filter((word) =>
-      word.word.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-    .sort((a, b) =>
-      sortAlphabetically
-        ? a.word.localeCompare(b.word)
-        : b.word.localeCompare(a.word)
-    );
+  const visibleGlossary = useMemo<GlossaryItem[]>(() => {
+    return [...glossary]
+      .filter((word) =>
+        word.word.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+      .sort((a, b) =>
+        sortAlphabetically
+          ? a.word.localeCompare(b.word)
+          : b.word.localeCompare(a.word)
+      );
+  }, [glossary, searchTerm, sortAlphabetically]);
+
   return (
     <section>
       <div className="flex justify-between items-center mb-3 flex-wrap gap-2">
@@ -73,7 +76,7 @@ const GlossaryList = ({
       </div>
 
       <div className="flex flex-col gap-3">
-        {loading ? (
+        {!loading ? (
           visibleGlossary.map((word: GlossaryItem) => (
             <GlossaryWordItem
               key={word.id}
@@ -87,7 +90,7 @@ const GlossaryList = ({
         )}
       </div>
 
-      {loading
+      {!loading
         ? visibleGlossary.length === 0 && (
             <p className="text-center text-gray-500 text-2xl mt-5">
               No words found. Please add a word.

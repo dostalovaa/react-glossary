@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import type GlossaryItem from "../../types/type";
 import { RxCross2 } from "react-icons/rx";
 
@@ -98,4 +98,4 @@ const GlossaryWordItem = ({
   );
 };
 
-export default GlossaryWordItem;
+export default memo(GlossaryWordItem);
