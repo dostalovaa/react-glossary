@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import type GlossaryItem from "../types/type";
+import dummydata from "../data/dummydata";
 import {
   collection,
   getDocs,
@@ -17,14 +18,21 @@ const useGlossary = () => {
 
   useEffect(() => {
     const fetchWords = async () => {
-      setLoading(true);
-      const snapshot = await getDocs(wordsRef);
-      const items = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as GlossaryItem[];
-      setGlossary(items);
-      setLoading(false);
+      try {
+        setLoading(true);
+        const snapshot = await getDocs(wordsRef);
+        const items = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as GlossaryItem[];
+        setGlossary(items);
+      } catch (error) {
+        console.warn("Firebase not connected - using fallback data.", error);
+
+        setGlossary(dummydata);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchWords();
