@@ -17,19 +17,25 @@ const useGlossary = () => {
   const wordsRef = collection(db, "words");
 
   useEffect(() => {
-    const fetchWords = async () => {
-      try {
-        setLoading(true);
-        const snapshot = await getDocs(wordsRef);
-        const items = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as GlossaryItem[];
-        setGlossary(items);
-      } catch (error) {
-        console.warn("Firebase not connected - using fallback data.", error);
+    setGlossary(dummydata);
+    console.log("Fallback glossary set:", dummydata);
 
-        setGlossary(dummydata);
+    const fetchWords = async () => {
+      setLoading(true);
+      try {
+        const snapshot = await getDocs(wordsRef);
+        if (!snapshot.empty) {
+          const items = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          })) as GlossaryItem[];
+
+          if (items.length > 0) {
+            setGlossary(items);
+          }
+        }
+      } catch (err) {
+        console.warn("Firestore error, keeping dummydata", err);
       } finally {
         setLoading(false);
       }
